@@ -6,44 +6,48 @@ using namespace std;
 
 template<typename T>
 struct CircularArr {
-  T* _front;
-  T* _rear;
-  T* _arr;
+  T* arr;
+  int rear;
+  int frnt;
   int capacity;
 
   CircularArr(int capacity) : 
     capacity(capacity), 
-    _arr(new T[capacity]), 
-    _front(nullptr), 
-    _rear(nullptr) {}
+    arr(new T[capacity]), 
+    frnt(0), 
+    rear(0) {}
   ~CircularArr() {
-    delete[] _arr;
-    delete _front;
-    delete _rear;
+    delete[] arr;
   }
 
   T front() {
-    if(empty()) throw "Array is empty";
+    // if(empty()) throw "Array is empty";
 
-    cout << "No es empty" << endl;
-    return 0;
+    return arr[frnt];
   }
 
   // T back() {
 
   // }
 
-  // void push_front(T) {
-
-  // }
+  void push_front(const T val) {
+    if(frnt == 0) {
+      arr[0] = val;
+    }
+    else {
+      rear++;
+      arr[rear] = val;
+    }
+  }
 
   // void push_back(T) {
 
   // }
 
-  // T pop_front() {
+  // T popfrnt() {
 
   // }
+
   // T pop_back() {
 
   // }
@@ -56,9 +60,9 @@ struct CircularArr {
 
   // }
 
-  bool empty() {
-    return !(_rear && _front);
-  }
+  // bool empty() {
+  //   //TODO
+  // }
 
   // bool is_full() {
 
