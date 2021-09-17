@@ -7,50 +7,62 @@ struct Node {
   int data;
   Node* next;
   Node* prev;
+  Node(int data) : data(data), next(nullptr), prev(nullptr) {}
 };
 
 struct DoubleList {
   Node* head;
   Node* tail;
+  DoubleList() : head(nullptr), tail(nullptr) {}
 };
 
-void SortedInsert(DoubleList* list, int data) {
-  Node* nodo = new Node;
-  nodo->data = data;
-  nodo->next = nullptr;
-  nodo->prev = nullptr;
-  if(list->head == nullptr && list->tail == nullptr) {
-    list-> head = nodo;
-    list-> tail = nodo;
+void SortedInsert(DoubleList* &list, int data) {
+  Node* nodo = new Node(data);
+  if(list->head == nullptr && list->tail == nullptr) { //lista vacia
+    list->head = nodo;
+    list->tail = nodo;
     return;
   }
 
-  Node* i;
-  for(i = list->head; i != nullptr && i->data < data; i = i->next);
+  Node* i = list->head;
+  while(i != nullptr && i->data < data) 
+    i = i->next;
 
-  if(i != nullptr) {
-    if(i->prev != nullptr) {
-      Node* p = i->prev;
-      p->next = nodo;
-      nodo->prev = p;
-    } else {
-      list->head = nodo;
-    }
-    i->prev = nodo;
-    nodo->next = i;
-  } else {
-    list->tail->next = nodo;
+  if(i == list->head) { //cuando val se debe insertar antes del head (pushfront)
+    nodo->prev = nullptr;
+    nodo->next = list->head;
+    list->head->prev = nodo;        
+    list->head = nodo;
+  } else if(i == nullptr){ //cuando val se inserta al final (pushback)
+    nodo->next = nullptr;  
     nodo->prev = list->tail;
+    list->tail->next = nodo;        
     list->tail = nodo;
-  }
-  
+  } else { //cuando val se inserta en otra posicion (insert)
+    nodo->prev = i->prev;  
+    nodo->next = i;
+    i->prev->next = nodo;
+    i->prev = nodo;
+}
 }
 
-void display(DoubleList* head) {
+
+void display(DoubleList* &list) {
   cout << " <-> ";
-  for(Node* i = head->head; i != nullptr; i = i->next) 
+  for(Node* i = list->head; i != nullptr; i = i->next) 
     cout << i->data << " <-> ";
   cout << endl;
+}
+
+void displayAsc(DoubleList* &list) {
+  for (Node* temp = list->head; temp != nullptr; temp=temp->next)
+    cout<<temp->data<<",";
+  cout<<endl;
+}
+void displayDesc(DoubleList* &list) {
+  for (Node* temp = list->tail; temp != nullptr; temp=temp->prev)
+    cout<<temp->data<<",";
+  cout<<endl;
 }
 
 int main() {
