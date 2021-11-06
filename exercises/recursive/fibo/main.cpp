@@ -43,7 +43,7 @@ long long mem_fibo(int n) {
 
 int main() {
   auto start = system_clock::now(); 
-  cout << mem_fibo(50) << '\n';
+  cout << mem_fibo(70) << '\n';
   auto stop = system_clock::now(); 
   duration<float,milli> duration = stop - start; 
 
