@@ -26,15 +26,38 @@ struct ll {
     head = nd;
   }
 
-  // node* push_back_recur(node* nd, int n) {
-  //   if(nd == nullptr) {
-  //     push_front(n);
-  //   }
-  // }
+  node* push_back_recur(node* nd, int n) {
+    if(nd->next == nullptr) {
+      node* tmp = new node(n);
+      nd->next = tmp;
+      return tmp;
+    }
 
-  // void push_back(int n) {
-  //   push_back_recur(head, n);
-  // }
+    return push_back_recur(nd->next, n);
+  }
+
+  void push_back(int n) {
+    push_back_recur(head, n);
+  }
+
+
+  node* search_recur(node* nd, int n) {
+    if(nd == nullptr) 
+      return nullptr;
+
+    if(nd->data == n) 
+      return nd;
+
+    return search_recur(nd->next, n);
+  } 
+
+  void search(int n) {
+    if(search_recur(head, n) == nullptr)
+      cout << "No se encontró el número\n";
+    else
+      cout << "Se encontró el número\n";
+  }
+
 
   void display() {
     for(node* tmp=head; tmp!=nullptr; tmp=tmp->next) {
@@ -53,6 +76,9 @@ int main() {
 
   lista->push_back(4);
   lista->push_back(5);
+  lista->push_back(6);
 
   lista->display();
+
+  lista->search(5);
 }

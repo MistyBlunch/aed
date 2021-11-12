@@ -1,3 +1,4 @@
-h_front(3);
-  lista->push_front(2);
-  lista->push_front(1);
+
+      cout << "No se encontró el número\n";
+    else
+      cout << "No se encontró el número\
